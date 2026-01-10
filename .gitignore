@@ -1,0 +1,34 @@
+# --- Environment & Binaries ---
+MY_SETUP
+.venv/
+venv/
+ENV/
+bin/
+lib/
+share/
+.direnv/
+*.pyc
+__pycache__/
+
+# --- Sensitive Data & Secrets ---
+.env
+.git-credentials
+*.key
+*.pem
+
+# --- Machine Learning Assets ---
+# Exclude large datasets and saved model weights
+*.pt
+*.pth
+*.ckpt
+*.bin
+data/
+datasets/
+
+# --- Editor & System Junk ---
+.zed/
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.log
