@@ -9,6 +9,7 @@ share/
 .direnv/
 *.pyc
 __pycache__/
+.envrc
 
 # --- Sensitive Data & Secrets ---
 .env
