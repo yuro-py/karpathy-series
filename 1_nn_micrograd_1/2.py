@@ -1,3 +1,5 @@
+# basic math behind backpropagation and gradient descent 
+
 from micrograd.engine import Value
 
 x = Value(3.0)
