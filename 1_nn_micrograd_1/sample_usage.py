@@ -14,7 +14,7 @@ e = c - d
 f = e**2
 g = f / 2.0
 g += 10.0 / f
-print("random operations happened on a & b....\n")
+print("random operations happened on a & b....until g..\n")
 print(f"g: {g.data:.4f}\n")  # prints 24.7041, the outcome of this forward pass
 g.backward()
 print("a :", a)
@@ -26,8 +26,6 @@ print("b :", b, "\n")
 lr = 0.01
 a.data = a.data - (lr * a.grad)
 b.data = b.data - (lr * b.grad)
-a.grad = 0
-b.grad = 0
 print("-------------------------------")
 print("changed a & b with lr 0.01....")
 print("a :", a)
@@ -42,7 +40,7 @@ e = c - d
 f = e**2
 g = f / 2.0
 g += 10.0 / f
-print("random operations happened on a & b....\n")
+print("random operations happened on a & b....until g..\n")
 print(f"g: {g.data:.4f}\n")
 g.backward()
 print("a :", a)
