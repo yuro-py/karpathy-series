@@ -7,5 +7,5 @@ class Value:
 
 
 a = Value(20)
-print(a)
-print(a.data)
+b = Value(-20)
+print(a + b)
