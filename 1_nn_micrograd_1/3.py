@@ -17,4 +17,4 @@ print(f(3.0))
 h = 0.01  # a small value to demonstrate how much small changes will happen positively
 x = 3.0  # change upon this
 print(f(x + h))  # the  small positive change noticed through this
-print((f(x + h) - f(x)) / h)  # wtf is this "normalization" thing?
+print((f(x + h) - f(x)) / h)  # "normalization" or "finding slope"
