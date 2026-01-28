@@ -4,7 +4,7 @@ class Value:
         self.data = data
         self._prev = set(_children)
         self._op = _op
-        self.grad = 0.0
+        self.grad = 1.0
 
     def __repr__(self):
         return f"Value(data={self.data})"
@@ -26,12 +26,37 @@ class Value:
         return out
 
 
-a = Value(2.0)
-b = Value(-3.0)
-c = Value(10.0)
-d = (a * b) + c
-f = Value(-2.0)
-L = (d * f).data
+def manual_backprop_optional_observation():
+    a = Value(2.0)
+    b = Value(-3.0)
+    c = Value(10.0)
+    e = a * b
+    d = e + c
+    f = Value(-2.0)
+    L = d * f
+
+    # 1 L
+    L.grad = 1.0
+    # 2 L = d * f
+    d.grad = L.grad * f.data
+    f.grad = L.grad * d.data
+    # 3 d = e + c
+    e.grad = 1.0 * d.grad
+    c.grad = 1.0 * d.grad
+    # 4 e = a + b
+    a.grad = e.grad * b.data
+    b.grad = e.grad * a.data
+
+    # print("a", a.grad)
+    # print("b", b.grad)
+    # print("c", c.grad)
+    # print("e", e.grad)
+    # print("d", d.grad)
+    # print("f", f.grad)
+    # print("L", L.grad)
+
+
+manual_backprop_optional_observation()
 
 
 def lol():
@@ -40,17 +65,20 @@ def lol():
     a = Value(2.0)
     b = Value(-3.0)
     c = Value(10.0)
-    d = (a * b) + c
+    e = a * b
+    d = e + c
     f = Value(-2.0)
     L1 = (d * f).data
 
-    a = Value(2.0 + h)
+    a = Value(2.0)
     b = Value(-3.0)
     c = Value(10.0)
-    d = (a * b) + c
-    f = Value(-2.0)
+    e = a * b
+    d = e + c
+    f = Value(-2.0 + h)
     L2 = (d * f).data
 
+    # add 'h' to any value for L2 to see the nudge.
     slope = (L2 - L1) / h
     print(slope)
 
