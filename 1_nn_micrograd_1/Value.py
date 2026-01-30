@@ -1,3 +1,6 @@
+import math
+
+
 class Value:
 
     def __init__(self, data, _children=(), _op=""):
@@ -25,6 +28,30 @@ class Value:
         out = Value(self.data / other.data, (self, other), "/")
         return out
 
+    def tanh(self):
+        x = self.data
+        out = (math.exp(2 * x) - 1) / (math.exp(2 * x) + 1)
+        return out
+
+
+h = 0.0001
+a = Value(2.0)
+b = Value(-3.0)
+c = Value(10.0)
+e = a * b
+d = e + c
+f = Value(-2.0)
+L = d * f
+
+a.data = 0.01 * a.grad
+b.data = 0.01 * b.grad
+c.data = 0.01 * c.grad
+f.data = 0.01 * f.grad
+e = a * b
+d = e + c
+L = d * f
+# print(L)
+
 
 def lol():
 
@@ -50,45 +77,10 @@ def lol():
     print(slope)
 
 
-lol()
+# lol()
 
 
-def manual_chain_rule():
-    # Setup
-    a = Value(2.0)
-    b = Value(-3.0)
-    c = Value(10.0)
-    e = a * b  # e = -6.0
-    d = e + c  # d = 4.0
-    f = Value(-2.0)
-    L = d * f  # L = -8.0
-
-    # --- MANUAL BACKPROP (The Chain) ---
-
-    # 1. Start at the end
-    L.grad = 1.0
-
-    # 2. Hop L -> d
-    # Local deriv of (d*f) wrt d is f.data
-    d.grad = f.data * L.grad  # -2.0 * 1.0 = -2.0
-
-    # 3. Hop d -> e
-    # Local deriv of (e+c) wrt e is 1.0
-    # We multiply by the INCOMING gradient (d.grad)
-    e.grad = 1.0 * d.grad  # 1.0 * -2.0 = -2.0
-
-    # 4. Hop e -> a ("The Far One")
-    # Local deriv of (a*b) wrt a is b.data
-    # We multiply by the INCOMING gradient (e.grad)
-    a.grad = b.data * e.grad  # -3.0 * -2.0 = 6.0
-
-    print(f"Final Far Derivative for a: {a.grad}")
-
-
-manual_chain_rule()
-
-
-def manual_backprop_optional_observation():
+def manual_backprop():
     a = Value(2.0)
     b = Value(-3.0)
     c = Value(10.0)
@@ -117,5 +109,14 @@ def manual_backprop_optional_observation():
     # print("f", f.grad)
     # print("L", L.grad)
 
+    a.data = 0.01 * a.grad
+    b.data = 0.01 * b.grad
+    c.data = 0.01 * c.grad
+    f.data = 0.01 * f.grad
+    e = a * b
+    d = e + c
+    L = d * f
+    print(L)
 
-manual_backprop_optional_observation()
+
+manual_backprop()
