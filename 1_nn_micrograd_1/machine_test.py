@@ -1,3 +1,5 @@
+# asked gemini to use analogy to explain stuff to me. it gave an exercise which I performed in this file.
+# # [not imp]
 import math
 
 
